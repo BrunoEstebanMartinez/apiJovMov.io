@@ -22,6 +22,8 @@ class TestingConn extends Seeder
             'STAT_NONAC' => '1',
         ]);
 
+
+       
     
     }
 }

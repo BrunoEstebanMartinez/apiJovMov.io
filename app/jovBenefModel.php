@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class jovBenefModel extends Model
 {
    protected $table = "JOVMOVI_BENEF";
-   protected $primaryKey = "BENEF_ID";
+   protected $primaryKey = "ID_BENEF";
    protected $fillable = [
     'CURP_PER',
     'PATERNO_A',
@@ -20,5 +20,10 @@ class jovBenefModel extends Model
     'STAT_EXIST',
     'STAT_NONAC'
    ];
+   public $timestamps = false;
 
 }
+
+
+
+
