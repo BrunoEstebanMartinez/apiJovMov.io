@@ -98,8 +98,8 @@ return [
         'host'          => '172.16.1.3',
         'port'          =>'1521',
         'database'      => 'ORCLINFA',
-        'username'      => 'USR_TORRES',
-        'password'      => 's42sx#xc19o',
+        'username'      => 'MLG',
+        'password'      => 'Bjnh650!C9',
     ],
        
     ],

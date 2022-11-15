@@ -6,6 +6,8 @@ use Illuminate\Http\Request as Requested;
 use Request;
 use App\jovBenefModel;
 use App\jovBenefImagesModel;
+use App\jovBenefModelSessions;
+use App\jovBenefModelStatus;
 use File;
 class personController extends Controller
 {
@@ -27,7 +29,6 @@ class personController extends Controller
 
 
  public function onLoginStatusTestJson($CURP){
-        $status = false;
         $validatePerson = jovBenefModel::select('CURP_PER')->where('CURP_PER', '=', $CURP)->first();
         if($validatePerson){
              return response()->json(
@@ -35,20 +36,47 @@ class personController extends Controller
                                         );
                   
         }
-        return response()->json($status);
+        return response()->json(['curp_per' => 'non']);
     }
-    
 
+    public function onLoginStatusTestJsonForAuth($PIN){
+            $validatePerson = jovBenefModelSessions::select('CURP_PER')->where('PIN_BENEF', '=', $PIN)->first();
+            if(!$validatePerson){
+                return response()->json(['pin_benef' => 'non']);
+            }
+            return response()->json([$validatePerson,
+                                    'pin_benef' => 'is'
+                                        ]);
+    }
+
+// Revision
+    public function onLoginStatusTestJsonForAuthPIN($CURP){
+        $validatePerson = jovBenefModelSessions::select('PIN_BENEF')->where('CURP_PER', '=', $CURP)->first();
+        if(!$validatePerson){
+            return response()->json(['pin_benef' => 'non']);
+        }
+        return response()->json([$validatePerson,
+                                'pin_benef' => 'is'
+                                ]);
+}
+
+        
+
+
+    
+/*
 public function onLoginStatusTestJsonin(){
         $validatePerson = jovBenefModel::select('CURP_PER')->where('CURP_PER', '=', Request::input('curpPerson'))->first();
         if($validatePerson){
              return response()->json($validatePerson);
                   
+        }else{
+
         }
-        return response()->json($validatePerson);
+        return response()->json(['curp_per' => 'non']);
     }
 
-
+*/
     public function onCreatePerson(Requested $request){
          $personUP = new jovBenefModel();
         $personUP -> CURP_PER = $request -> curpPerson;
@@ -120,45 +148,40 @@ public function onLoginStatusTestJsonin(){
         $imagesPerson -> IDENT_INE_REVER =      $indentrever;
         $imagesPerson -> BENEF_FUR =            $FURED;
         
-
-
-
-
-        /*
-
-        $CurpID = $request -> curp_per;
-        $compro = $request-> comprobante_es;
-        $curpfoto = $request -> curp_ph;
-        $actaN = $request -> acta_nac;
-        $indentadver = $request -> indent_ine_adver;
-        $indentrever = $request -> indent_ine_rever;
-        $FURED = $request -> benef_fur;
-        $imagesPerson -> BENEF_FUR = $request -> benef_fur;
-
-        $file1 = $CurpID.'_'.$request->file('comprobante_es')->getClientOriginalName();
-        $file2 = $CurpID.'_'.$request->file('curp_ph')->getClientOriginalName();
-        $file3 = $CurpID.'_'.$request->file('acta_nac')->getClientOriginalName();
-        $file4 = $CurpID.'_'.$request->file('indent_ine_adver')->getClientOriginalName();
-        $file5 = $CurpID.'_'.$request->file('indent_ine_rever')->getClientOriginalName();
-        $file6 = $CurpID.'_'.$request->file('benef_fur')->getClientOriginalName();
-
-        
-*/
-
-        /*
-        $imagesPersonRes -> CURP_PER =             $request -> curp_per;
-        $imagesPersonRes -> COMPROBANTE_ES =       $request -> Request::input('comprobante_es');
-        $imagesPersonRes -> CURP_PH =              $request -> Request::input('curp_ph');
-        $imagesPersonRes -> ACTA_NAC =             $request -> Request::input('acta_nac');
-        $imagesPersonRes -> IDENT_INE_ADVER =      $request -> Request::input('indent_ine_adver');
-        $imagesPersonRes -> IDENT_INE_REVER =      $request -> Request::input('indent_ine_rever');
-        $imagesPersonRes -> BENEF_FUR =             $request -> Request::input('benef_fur');
-        */
         $imagesPerson -> save();
         return response()->json($imagesPerson);
     }
 
 
-   
-}
+    public function onCreatePIN(Requested $request){
+        $personUP = new jovBenefModelSessions();
+        $personUP -> CURP_PER = $request -> curp_per;
+        $personUP -> PIN_BENEF = $request -> pin_benef;
+        $personUP -> save();
+        return response()->json($personUP);     
+    }
 
+    public function onCreateBitPerson(Requested $request){
+
+        if (getenv('HTTP_CLIENT_IP')) {
+            $ip_benef = getenv('HTTP_CLIENT_IP');
+        } elseif (getenv('HTTP_X_FORWARDED_FOR')) {
+            $ip_benef = getenv('HTTP_X_FORWARDED_FOR');
+        } elseif (getenv('HTTP_X_FORWARDED')) {
+            $ip_benef = getenv('HTTP_X_FORWARDED');
+        } elseif (getenv('HTTP_FORWARDED_FOR')) {
+            $ip_benef = getenv('HTTP_FORWARDED_FOR');
+        } elseif (getenv('HTTP_FORWARDED')) {
+            $ip_benef = getenv('HTTP_FORWARDED');
+        } else {
+            $ip_benef = $_SERVER['REMOTE_ADDR'];
+        }       
+
+        $personUP = new jovBenefModelStatus();
+        $personUP -> CURP_PH =    $request -> curp_per;
+        $personUP -> IP_BENEF =   $ip_benef;
+        $personUP -> save();
+        return response()->json($personUP);
+    }
+
+}
