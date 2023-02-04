@@ -13,8 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'welcome');
-//to API routes
+//Route::view('/', 'welcome');
+
+//toLogin
+Route::view('', 'SFR.login.login');
+Route::post('auth', 'sedagUsuariosBackController@onLogonUserBack')->name('validate');
+
+
+
+
+
+
+
+/*to API routes
 Route::get('personFUR', 'jovBenefModelFURAPIController@retrivePersonFUR');
 Route::get('RetriveTest', 'personController@onAllPerson');
 Route::post('altaPersonBen', 'personController@onCreatePerson');
+*/

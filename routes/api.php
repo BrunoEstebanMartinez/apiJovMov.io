@@ -14,12 +14,33 @@ use Illuminate\Http\Request;
 */
 
 
-//Schema MLG
+
+//WebService to RestApi logic
+Route::get('WebSValidation/{CURP}', 'sedagWSController@WB');
+
+//Schema MLG -> login process
+Route::get('login/handle' , 'sedagUsuariosController@getUserPassing');
+Route::post('login/post', 'sedagUsuariosController@onFirstReg');
 Route::get('personFUR', 'jovBenefModelFURAPIController@retrivePersonFUR');
+//Route::get('catData', 'jovBenefModelFURAPIController@retriveProgramas');
+/*
+Route::get('getDetailProg/{CVE}', 'jovBenefModelFURAPIController@retriveDepenOProg');
+Route::get('getDetailEsp/{CVE}', 'jovBenefModelFURAPIController@retriveProgDetalle');
+*/
+Route::get('getAllDpes', 'sedagCaController@retriveData');
+Route::get('getDetailProg/{NOMBRE}', 'sedagCaController@retriveDepenOProg');
+Route::get('getDetailEsp/{NOMBRE}', 'sedagCaController@retriveProgDetalle');
+Route::get('getStudios', 'sedagCaController@getStudios');
+Route::get('getCviles', 'sedagCaController@getCviles');
 //Tabla FURWEB_METADATO_SR2022
 //Beneficiario register
-Route::post('newBenefPerson', 'jovBenefModelFURAPIController@postOnPersonFUR');
+//Route::post('newBenefPerson', 'jovBenefModelFURAPIController@postOnPersonFUR');
 
+Route::get('benef/handle/{CURP}', 'sedagBenefController@statusCurp');
+Route::post('benef/onPostB', 'sedagBenefController@newPersonBenef');
+
+
+/*
 //Images register
 Route::post('newPersonImages', 'jovBenefImagesController@postImagesPerson');
 
@@ -27,9 +48,10 @@ Route::post('newPersonImages', 'jovBenefImagesController@postImagesPerson');
 Route::post('pinRegister', 'jovBenefPINController@postPinPass');
 Route::get('login/{PIN}', 'jovBenefPINController@getOnPersonWithPINT');
 Route::get('initialAPP/{CURP}', 'jovBenefModelFURAPIController@getOnPersonFURCURP');
-
+*/
 
 //Schema TORRES
+/*
 Route::get('onLogon', 'personController@onLoginStatus');
 Route::get('onLogonTesting/{CURP}', 'personController@onLoginStatusTestJson');
 Route::get('onLogonTestingOn', 'personController@onLoginStatusTestJson');
@@ -41,3 +63,4 @@ Route::post('altaPersonBen', 'personController@onCreatePerson');
 Route::post('altaPersonImage', 'personController@onCreateImages');
 Route::post('altaPersonSession', 'personController@onCreatePIN');
 Route::post('altaRegPerson', 'personController@onCreateBitPerson');
+*/

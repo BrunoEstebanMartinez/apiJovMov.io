@@ -9,14 +9,20 @@ use App\jovBenefImagesModel;
 use App\jovBenefModelSessions;
 use App\jovBenefModelStatus;
 use File;
+use SoapClient;
 class personController extends Controller
 {
- 
-    public function onAllPerson(){
-        $personRet = jovBenefModel::All();
-        return $personRet;
+
+    public function OrLoginUser($LOGIN,$PASSLOG,$FOLIO){
+    
+    }
+
+    public function registerUsers(Requested $request){
 
     }
+
+
+
 
      public function onLoginStatus(Requested $request){
         $validatePerson = jovBenefModel::select('CURP_PER')->where('CURP_PER', '=', 'MAMB990504HMCRLR03')->first();
@@ -59,6 +65,9 @@ class personController extends Controller
                                 'pin_benef' => 'is'
                                 ]);
 }
+
+        
+
 
         
 

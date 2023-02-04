@@ -10,6 +10,8 @@ class jovBenefModelFUR extends Model
     protected $primaryKey = "FOLIO";
     protected $fillable = [
     	'N_PERIODO',
+        'CVE_PROGRAMA',
+        'FOLIO',
     	'FOLIO_RELACIONADO',
     	'PRIMER_APELLIDO',
     	'SEGUNDO_APELLIDO',
@@ -26,4 +28,5 @@ class jovBenefModelFUR extends Model
     ];
 
     public $timestamps = false;
+    public $incrementing = false;
 }
