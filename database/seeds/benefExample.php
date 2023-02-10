@@ -22,7 +22,7 @@ class benefExample extends Seeder
             'NOMBRE_COMPLETO' => 'MARTINEZ MILLAN BRUNO ESTEBAN',
             'FECHA_NACIMIENTO' => '04/05/1999',
             'SEXO' => 'H',
-            'CURP' => 'MAMB990504HMCRLR01',
+            'CURP' => 'MAMB990504gfdg',
             'COP_FOT_IDEN_REV' => 'MAMB990504HMCRLR03_indenFotoRever.jpg',
             'COP_FOT_COMPROBANTE' => 'MAMB990504HMCRLR03_Comprobante_Es.jpg',
             'COP_FOT_CURP' => 'MAMB990504HMCRLR03_Curp.jpg',

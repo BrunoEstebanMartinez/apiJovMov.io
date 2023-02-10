@@ -2,18 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
-//Route::view('/', 'welcome');
 
 //toLogin
 Route::view('', 'SFR.login.login');
@@ -24,7 +13,7 @@ Route::group(['prefix' => 'sfr-campo'], function() {
     //User type Captura
 
     Route::get('verHistorico', 'sedagBackBenefController@onViewAllData')->name('verHistorico');
-    
+    Route::get('editUniquePerson', 'sedagBackBenefController@onEditBenef')->name('editUnique'); 
 
 });
 
