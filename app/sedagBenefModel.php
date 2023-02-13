@@ -24,7 +24,7 @@ class sedagBenefModel extends Model
 		'SEXO',
 		'CURP',
 		'RFC',
-		'FOLIO_ID_OFICIAL_C',
+		'FOLIO_ID_OFICIAL',
 		'CVE_BENEFICIO',
 		'CVE_ESTADO_CIVIL',
 		'CVE_GRADO_ESTUDIOS',
@@ -55,11 +55,13 @@ class sedagBenefModel extends Model
 		'MANZANA',
 		'LOTE',
 		'CODIGO_POSTAL',
-		'ENTRE_CALLE_C',
-		'OTRA_REFERENCIA_C',
+		'ENTRE_CALLE',
+		'OTRA_REFERENCIA',
 		'TELEFONO',
-		'NUMERO_HIJOS_C',
-		'CORREO_ELECTRONICO_C'
+		'NUMERO_HIJOS',
+		'CORREO_ELECTRONICO',
+		'IP_USER_C',
+		'STATUS_1'
     ];
 
     public $timestamps = false;

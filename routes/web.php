@@ -11,10 +11,19 @@ Route::group(['prefix' => 'sfr-campo'], function() {
     Route::post('menu', 'sedagUsuariosBackController@onLogonUserBack')->name('validate');
     
     //User type Captura
-
     Route::get('verHistorico', 'sedagBackBenefController@onViewAllData')->name('verHistorico');
-    Route::get('editUniquePerson', 'sedagBackBenefController@onEditBenef')->name('editUnique'); 
+    Route::get('nuevoUnico', 'sedagBackBenefController@onNewBenef')->name('nuevo');
+    Route::post('registroUnico', 'sedagBackBenefController@publicBenef')->name('registro');
+    
+    Route::get('editUniquePerson/{idBenef}', 'sedagBackBenefController@onEditBenef')->name('editUnique'); 
+    Route::put('updateBenef/{idBenef}/editado', 'sedagBackBenefController@onUpdateBenef')->name('updateUnique');
 
+
+    //getLocalidades
+   
+    //User type admin
+
+    
 });
 
 

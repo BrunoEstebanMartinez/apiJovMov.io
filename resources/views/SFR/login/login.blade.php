@@ -111,36 +111,37 @@
                                   height: 70%;
                                   padding: 4em;">
 
-                    <form action = "" method = "POST">
+                    <form action = "{{  route('validate') }} " method = "POST">
+                      @csrf
                             <div class="mb-3">
                               <label class="form-label">Correo electrónico</label>
-                              <input type="text" class="form-control">
+                              <input type="text" id = "correoFUR" name = "correoFUR" class="form-control">
                             </div>
 
                             <div class="mb-3">
                               <label class="form-label">Contraseña</label>
-                              <input type="password" class="form-control">
+                              <input type="password" id = "passwordFUR" name = "passwordFUR" class="form-control">
                             </div>
 
                             <div class = "mb-3 d-grid gap-2">
                             <button type="submit" class="btn btn-outline-success">Entrar</button>
                             </div>
-
-
-
-
                     </form>
                     
-                    </div>
-                    
+                    @if(count($errors) > 0)
+                      <div class="alert alert-danger" role="alert">
+                        <ul>
+                          @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                          @endforeach
+                        </ul>
+                      </div>
+                    @endif
 
-                    
-                          
+
+                    </div>          
               </div>
           </div>
-              
-
-
       </div>
 
       <script type = "text/javascript" src = "{{ asset('js/slideshow.js') }}"></script>

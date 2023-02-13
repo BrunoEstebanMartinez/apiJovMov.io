@@ -6,11 +6,7 @@
     <!-- Todo -->
     <!-- Slides -->
     <body>
-        @yield('navbar')
-        @yield('sidebar')
         @yield('canvas')
-        @yield('states')
-        @yield('scripts')  
     </body>
       
 </html>

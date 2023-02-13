@@ -69,10 +69,10 @@ class sedagUsuariosBackController extends Controller{
                         $status_1 = $session -> session() -> get('status_1');
 
                     if(!($cve_usuario == 'AD') || ($cve_usuario == 'SA')){
-                        return view('SFR.states.menuCapture', compact('logon', 'password', 'cve_usuario', 'cve_arbol', 'status_1'));
+                        return view('SFR.welcomeUser', compact('logon', 'password', 'cve_usuario', 'cve_arbol', 'status_1'));
                     };
                         
-                        return view('SFR.states.menuAdmin', compact('logon', 'password', 'cve_usuario', 'cve_arbol', 'status_1'));
+                        return view('SFR.welcomeUser', compact('logon', 'password', 'cve_usuario', 'cve_arbol', 'status_1'));
 
                     break;
 

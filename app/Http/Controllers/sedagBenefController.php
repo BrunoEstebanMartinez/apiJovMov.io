@@ -51,7 +51,7 @@ class sedagBenefController extends Controller
            $compro =      $request -> curp.'_'.'ComprobanteEs' . '.' . 'jpg';
            $curpfoto =    $request -> curp.'_'.'Curp' . '.' . 'jpg';
            $indentadver = $request -> curp.'_'.'indenFotoAdver' . '.' . 'jpg';
-           $indentrever = $request -> curp_.'_'.'indenFotoRever' . '.' . 'jpg';
+           $indentrever = $request -> curp.'_'.'indenFotoRever' . '.' . 'jpg';
            $FURED =       $request -> curp.'_'.'DocFUR' . '.' . 'jpg';
           
           $storeInPathcompro = public_path('/storage/'.$compro);

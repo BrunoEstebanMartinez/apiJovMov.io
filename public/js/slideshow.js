@@ -26,3 +26,5 @@
     setTimeout(slideAuto, 9000);
 
 }
+
+

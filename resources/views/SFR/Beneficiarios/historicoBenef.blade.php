@@ -1,81 +1,89 @@
-@extends('SFR.canvas')
-    @include('SFR.states.menuCapture')
+@extends('SFR.stateDasher')
 
     @section('canvas')
+    <div style = "position: relative; 
+                    height: 10%;
+                    width: 100%;
+                    padding-left: 1em;
+                    padding-right: 1em;">
 
-
-
-  <div class="p-4 sm:ml-64">
-      <div class = "p-4 mt-14">
-
-                <form>
-                    <div class="flex">
-                        <button id="dropdown-button" data-dropdown-toggle="dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">Periodo<svg aria-hidden="true" class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg></button>
-                        <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-                            <li>
-                                <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mockups</button>
-                            </li>
-                            <li>
-                                <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Templates</button>
-                            </li>
-                            <li>
-                                <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Design</button>
-                            </li>
-                            <li>
-                                <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Logos</button>
-                            </li>
-                            </ul>
-                        </div>
-                        <div class="relative w-full">
-                            <input type="search" id="search-dropdown" class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="" required>
-                            <button type="submit" class="absolute top-0 right-0 p-2.5 text-sm font-medium text-white bg-blue-700 rounded-r-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                                <span class="sr-only">Search</span>
-                            </button>
-                        </div>
+        <div class = "row ">
+            <div class = "col">
+                    <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Por nombre y/o curp..." aria-label="Por nombre y/o curp..." aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="button" disabled><i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
-                </form>
+            </div>
 
-      </div>
-
-  </div>
-
-    <div class="p-4 sm:ml-64">
-
-          <div class="p-4">
-              
-              <div class="grid grid-cols-4 gap-4">
-
-              @foreach($allDataBenef as $beneficiario)
-
-              <a href="{{ route('editUnique') }}" id = "fetchModal" class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                  <p class="text-justify font-normal text-gray-700 dark:text-gray-400">{{$beneficiario->curp}}</p>
-                  <p class="text-justify font-normal text-gray-700 dark:text-gray-400">{{$beneficiario->nombre_completo}}</p>
-                  <p class="text-justify font-normal text-gray-700 dark:text-gray-400">{{$beneficiario->tipo_beneficiario}}</p>
-                  <p class="text-justify font-normal text-gray-700 dark:text-gray-400">{{$beneficiario->cve_entidad_federativa}}</p>
-                  <p class="text-justify font-normal text-gray-700 dark:text-gray-400">{{$beneficiario->cve_programa}}</p>
-              </a>
-
-              @endforeach
-
-              </div>
-
+            <div class = "col">
+                <button type = "button" class="btn btn-primary rounded-pill"><a href="{{ route('nuevo') }}" ><i class="fa-solid fa-plus"></i></a></button>
+            </div>
+        
         </div>
-      </div>
+       
+    </div>
+
+    <div style = "position: relative;
+                    height: 85%;
+                    width: 100%;
+                    padding: 1em;
+                    overflow-y: scroll;
+                    ">
 
 
-   
-    
+                    <div class="row row-cols-1 row-cols-md-3 g-4" style = "display: flex;
+                    justify-content: center;">
+                            @foreach($allDataBenef as $beneficiario)
+                                    <div class="col">
+                                    @if(!$beneficiario -> status_1 == '0')
+                                    <div class="card border-success border-2" style="width: 18rem;">
+                                        @else
+                                    <div class="card border-danger border-3" style="width: 18rem;">
+                                        @endif
+                                            <div class="card-body">
+                                                <h5 class="card-title" style = "font-weight: bold">Beneficiario</h5>
+                                                <h6 class="card-title">{{ $beneficiario -> nombre_completo }}</h6>
+                                                <h6 class="card-title">{{ $beneficiario -> curp }}</h6>
+                                                @if(isset($beneficiario -> cop_fot_curp))
+                                                <h6 class="card-title">Documentos: SI</h6>
+                                                @else
+                                                <h6 class="card-title">Documentos: NO</h6>
+                                                @endif
+                                            <div class = "row">
+                                                
+                                                <div class = "col d-flex justify-content-center">
+                                                <button type = "button" class="btn btn-success rounded-pill"><a href="{{ route('editUnique', array($beneficiario->folio)) }}"><i class="fa-solid fa-pencil"></i></a></button>
+                                                </div>
+                                            
+                                                <div class = "col d-flex justify-content-center">
+                                                @if(!$cve_usuario == 'CA')
+                                                    <button type = "button" class="btn btn-danger rounded-pill"><a href="{{ route('editUnique', array($beneficiario->folio)) }}" ></a><i class="fa-solid fa-pencil"></i></button>
+                                                    @else
+                                                    <button type = "button" class="btn btn-danger rounded-pill" disabled><a href="{{ route('editUnique', array($beneficiario->folio))}}" ></a><i class="fa-solid fa-trash"></i></button>
 
+                                                    @endif
+                                                </div>
+                                            </div>
+                                                
+                                            </div>
+                                            </div>
+                                    </div>
+                            @endforeach
+                            
+                        </div>
+                       
             
-  
-
-
+    </div>
+    <div style = "position: relative; 
+                    display: flex;
+                    justify-content: center;
+                    width:100%;
+                    height: 5%;">
+                    {!!  $allDataBenef -> appends(request()->input())->links() !!}
+                    </div>
     @endsection
 
-    @section('scripts')
+    @section('javascript')
 
-    
 
     @endsection
