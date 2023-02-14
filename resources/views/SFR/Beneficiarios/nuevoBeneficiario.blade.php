@@ -15,6 +15,7 @@
                         <div class = "border border-info" style = "position:relative;
                         width: 10%;
                         height: 100%;">
+                        
                         <div style = "position: relative; 
                                         width: 100%;
                                         height: 33.33%;">
@@ -122,9 +123,15 @@
                                                                                  
                                                                                                 <label class="form-label">Apellido paterno</label>
                                                                                                 <input type="text" class = "form-control" value = "" name = "primer_apellido" id = "primer_apellido">
+                                                                                        
+                                                                                       
                                                                                                 @error('primer_apellido')
+                                                                                             
                                                                                                         <div class="alert alert-danger">Campo obligatorio</div>
+                                                                                                      
                                                                                                 @enderror 
+                                                                                        
+                                                                                                
                                                                                  
                                                                                 </div>  
 
@@ -245,10 +252,27 @@
                                                                         width: 100%;
                                                                         height: 90%;
                                                                         padding: 1em;">
+                                                        
 
+                                                        <div class = "row mb-3">
+
+                                                                        <div class = "col">
+
+                                                                                <div class="input-group">
+                                                                                        <span class="input-group-text">Entidad de nacimiento</span>
+                                                                                        <input class="form-control" value =  "" name = "entidad_nac" id = "entidad_nac">
+                                                                                        <span class="input-group-text">Entidad donde vive</span>
+                                                                                        <input class="form-control" value =  "" name = "entidad_vive" id = "entidad_vive">      
+                                                                                              
+                                                                                       
+                                                                                </div> 
+                                                                        </div>  
+
+
+                                                        </div>
                                                                        
 
-                                                                        
+                                                                 
 
                                                                         <div class = "row mb-3">
 
@@ -264,30 +288,8 @@
                                                                                                          @endforeach
                                                                                                         @endif
                                                                                                 </datalist>
-                                                                                        </div> 
-                                                                                 </div>  
 
-                                                                                
-                                                                        </div>
-
-                                                                        <div class = "row mb-3">
-
-                                                                                        <div class = "col">
-                                                                                                        <div class="input-group">
-                                                                                                                <span class="input-group-text">Código postal</span>
-                                                                                                                <input type="text"  value = "" class="form-control" name = "codigo_postal" id = "codigo_postal">
-                                                                                                        </div> 
-                                                                                        </div> 
-
-                                                                                                
-                                                                        </div>
-
-                                                                        <div class = "row mb-3">
-
-                                                                                        <div class = "col">
-                                                                                               
-                                                                                                <div class="input-group">
-                                                                                                        <span class="input-group-text">Localidad</span>
+                                                                                                <span class="input-group-text">Localidad</span>
                                                                                                         <input class="form-control" value = "" name = "loc_desc" id = "loc_desc" list = "localidad">      
                                                                                                         <datalist id= "localidad">
                                                                                                         @if(is_array($getCvesLoc) || is_object($getCvesLoc))
@@ -296,53 +298,51 @@
                                                                                                          @endforeach
                                                                                                         @endif
                                                                                                 </datalist>
-                                                                                                </div> 
-                                                                                                
+
+                                                                                                <span class="input-group-text">Código postal</span>
+                                                                                                <input type="text"  value = "" class="form-control" name = "codigo_postal" id = "codigo_postal">
+
+
                                                                                         </div> 
 
-                                                                                        
-                       
+
+                                                                                 </div>  
+
+                                                                                
                                                                         </div>
+
+                                                                        
 
 
                                                                         <div class = "row mb-3">
-                                                                                        <div class = "col">
-                                                                                                
-                                                                                        <div class="input-group">
-                                                                                                <span class="input-group-text">Calle</span>
-                                                                                                <input type="text"  class="form-control" value = "" name = "calle" id = "calle">
-                                                                                                <span class="input-group-text">Y</span>
-                                                                                                <input type="text"  class="form-control" value = "" name = "entre_calle" id = "entre_calle">
-                                                                                        </div>                    
-                                                                                                 
-                                                                                        </div>
-                                                                                         
-                                                                                        
 
-                                                                         </div>
-
-                                                                         <div class = "row mb-3">
                                                                                 <div class = "col">
                                                                                                 
                                                                                         <div class="input-group">
+                                                                                                <span class="input-group-text">Entre calle</span>
+                                                                                                <input type="text"  class="form-control" value = "" name = "calle" id = "calle">
+                                                                                                <span class="input-group-text">Y calle</span>
+                                                                                                <input type="text"  class="form-control" value = "" name = "entre_calle" id = "entre_calle">
                                                                                                 <span class="input-group-text">Manzana</span>
                                                                                                 <input type="text"  class="form-control" value = "" name = "manzana" id = "manzana">
-                                                                                                <span class="input-group-text">Lote</span>
-                                                                                                <input type="text" class="form-control" value = "" name = "lote" id = "lote">
+                                                                                               
                                                                                         </div>                    
                                                                                                  
                                                                                 </div>
                                                                                          
-                                                                                
+                                                                                        
+
                                                                          </div>
+
+                                                                         
 
                                                                          <div class = "row mb-3">
                                                                                 <div class = "col">
                                                                                                 
                                                                                         <div class="input-group">
-                                                                                                <span class="input-group-text">Número exterior</span>
+                                                                                                <span class="input-group-text">No. exterior</span>
                                                                                                 <input type="text" class="form-control" value = "" name = "no_exterior" id = "no_exterior">
-                                                                                                <span class="input-group-text">Número interior</span>
+                                                                                                <span class="input-group-text">No. interior</span>
                                                                                                 <input type="text" class="form-control" value = "" name = "no_interior" id = "no_interior">
                                                                                         </div>                    
                                                                                                  
@@ -375,7 +375,8 @@
                                                                         width: 100%;
                                                                         height: 10%;
                                                                         padding-left: 1em;"><h3>Documentos oficiales</h3></div>
-                                                <div class = "" style = "position: relative;
+                                                                        
+                                                <div class = "mb-3" style = "position: relative;
                                                                         width: 100%;
                                                                         height: 90%;
                                                                         padding-left: 2em;

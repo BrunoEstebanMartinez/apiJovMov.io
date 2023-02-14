@@ -14,6 +14,7 @@
         "guzzlehttp/guzzle": "^7.5",
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
+        "laravelcollective/html": "^6.4",
         "proengsoft/laravel-jsvalidation": "^4.7",
         "yajra/laravel-oci8": "^7.1",
         "yajra/laravel-pdo-via-oci8": "^2.4"

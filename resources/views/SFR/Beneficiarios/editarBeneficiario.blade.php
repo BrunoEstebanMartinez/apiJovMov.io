@@ -2,10 +2,20 @@
 
     @section('canvas')
 
+    @if(count($errors) > 0)
+                      <div class="alert alert-danger" role="alert">
+                        <ul>
+                          @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                          @endforeach
+                        </ul>
+                      </div>
+   @endif
+
+
     <div style = "position: relative;
                 width: 100%;
                 height: 100%;
-               
                 display: inline-flex;">
 
         <div class = "" style = "position:relative;
@@ -102,9 +112,11 @@
 
                                         <scroll-container>
                                
-
+                                       
                                
                                                 <scroll-page  id = "personalData">
+
+                               
                                                         <div class = "border border-start-0 border-info" style = "position: relative;
                                                                         width: 100%;
                                                                         height: 10%;
@@ -115,24 +127,24 @@
                                                                         height: 90%;
                                                                         padding: 1em;">
 
-                                                                        
+                                                        <form action = "{{ route('updateUnique', $allDataBenef -> folio) }}" method = "POST">
+                                                        {{ csrf_field() }} 
+                                                                        <div class = "row mb-3" >
 
-                                                                        <div class = "row mb-3">
-
-                                                                                <div class = "col" >
-                                                                                      <div class = "input-group">
+                                                                                <div class = "col" style = "display: none;">
+                                                                                      <div class = "input-group"  style = "display: none;">
                                                                                                 <label class="form-label">Folio</label>
                                                                                                 <input type="text" class = "form-control" value = "{{$allDataBenef->folio}}" name = "folio" id = "folio">
                                                                                                      
                                                                                       </div>  
-                                                                                </div>
+                                                                         </div>
 
                                                                                 <div class = "col">
-                                                                                      <div class = "input-group">
+                                                                                      
                                                                                                 <label class="form-label">Apellido paterno</label>
                                                                                                 <input type="text" class = "form-control" value = "{{$allDataBenef->primer_apellido}}" name = "primer_apellido" id = "primer_apellido">
                                                                                                      
-                                                                                      </div>  
+                                                                                       
                                                                                 </div>  
                                                                                 <div class = "col">
                                                                                                 <label class="form-label">Apellido materno</label>
@@ -167,7 +179,7 @@
                                                                                         <div class = "col">
                                                                                                
                                                                                                 <label class="form-label">Fecha de nacimiento</label>
-                                                                                                <input type="date" class = "form-control" value = "{{ date('Y-m-d', strtotime($allDataBenef->fecha_nacimiento)) }}" name = "fecha_nacimiento" id = "fecha_nacimiento">
+                                                                                                <input type="date" class = "form-control" value = "date('d/m/Y', {{ $allDataBenef->fecha_nacimiento }})" name = "fecha_nacimiento" id = "fecha_nacimiento">
                                                                                                 
                                                                                         </div> 
 
@@ -248,7 +260,7 @@
                                                                                         <div class = "col">
 
                                                                                                                 <label class="form-label">Correo electrónico</label>
-                                                                                                                <input type="text"  class = "form-control" value = "{{ $allDataBenef -> correo_electronico }}"name = "correo_electron" id = "correo_electron">
+                                                                                                                <input type="email"  class = "form-control" value = "{{ $allDataBenef -> correo_electronico }}" name = "correo_electron" id = "correo_electron">
 
                                                                                         </div>    
                                                                                         
@@ -276,12 +288,28 @@
                                                                                 <div class = "col">
                                                                                       <div class = "input-group">
                                                                                                 
-                                                                                                <span class="input-group-text">Entidad federativa</span>
-                                                                                                @if($allDataBenef -> cve_entidad_federativa == '15')
-                                                                                                <input type="text" class="form-control" id = "initQuery" value = "{{ $allDataBenef->cve_entidad_federativa }}" name = "entidad_federativa" disabled>
-                                                                                                <input type="text" class = "form-control" value = "Estado de México">
-                                                                                                @endif
-                                                                                                     
+                                                                                                <span class="input-group-text">Entidad de nacimiento</span>
+                                                                                                <input class="form-control" value =  "{{ $allDataBenef -> desc_entidad_federativa}}" name = "entidad_nacimiento" id = "entidad_nacimiento" list = "entidad_nacimiento_list"> 
+                                                                                                <datalist id = "entidad_nacimiento_list">
+                                                                                               
+                                                                                                                @if(is_array($getCvesEntidad) || is_object($getCvesEntidad))
+                                                                                                                @foreach($getCvesEntidad as $entidades)
+                                                                                                                        <option value = "{{ $entidades -> entidad_federativa }}"></option>
+                                                                                                                @endforeach
+                                                                                                                @endif
+                                                                                                </datalist>
+
+
+                                                                                                </datalist>
+                                                                                                <span class="input-group-text">Entidad donde vive</span>
+                                                                                                <input class="form-control" name = "entidad_vive" id = "entidad_vive" list = "entidad_vive_list">
+                                                                                                <datalist id = "entidad_vive_list">
+                                                                                                        @if(is_array($getCvesEntidad) || is_object($getCvesEntidad))
+                                                                                                                @foreach($getCvesEntidad as $entidades)
+                                                                                                                        <option value = "{{ $entidades -> entidad_federativa }}"></option>
+                                                                                                                @endforeach
+                                                                                                        @endif 
+                                                                                                </datalist>
                                                                                       </div>  
                                                                                 </div>  
                                                                                 
@@ -348,9 +376,9 @@
                                                                                         <div class = "col">
                                                                                                 
                                                                                         <div class="input-group">
-                                                                                                <span class="input-group-text">Calle</span>
+                                                                                                <span class="input-group-text">Entre calle</span>
                                                                                                 <input type="text"  class="form-control" value = "{{$allDataBenef->calle}}" name = "calle" id = "calle">
-                                                                                                <span class="input-group-text">Y</span>
+                                                                                                <span class="input-group-text">Y calle</span>
                                                                                                 <input type="text"  class="form-control" value = "{{ $allDataBenef->entre_calle }}" name = "entre_calle" id = "entre_calle">
                                                                                         </div>                    
                                                                                                  
@@ -364,7 +392,7 @@
                                                                                 <div class = "col">
                                                                                                 
                                                                                         <div class="input-group">
-                                                                                                <span class="input-group-text">Manzana</span>
+                                                                                                <span class="input-group-text">Mza</span>
                                                                                                 <input type="text"  class="form-control" value = "{{ $allDataBenef->manzana }}" name = "manzana" id = "manzana">
                                                                                                 <span class="input-group-text">Lote</span>
                                                                                                 <input type="text" class="form-control" value = "{{ $allDataBenef->lote }}" name = "lote" id = "lote">
@@ -379,9 +407,9 @@
                                                                                 <div class = "col">
                                                                                                 
                                                                                         <div class="input-group">
-                                                                                                <span class="input-group-text">Número exterior</span>
+                                                                                                <span class="input-group-text">No. ext</span>
                                                                                                 <input type="text" class="form-control" value = "{{ $allDataBenef->num_ext }}" name = "no_exterior" id = "no_exterior">
-                                                                                                <span class="input-group-text">Número interior</span>
+                                                                                                <span class="input-group-text">No. int</span>
                                                                                                 <input type="text" class="form-control" value = "{{ $allDataBenef->num_int }}" name = "no_interior" id = "no_interior">
                                                                                         </div>                    
                                                                                                  
@@ -489,15 +517,17 @@
                                                                                 
                                                                                 <div class = "col d-flex justify-content-center">
 
-                                                                                        <a href="" role = "button" class = "btn btn-outline-danger">Cancelar</a>
+                                                                                        <a href="{{ route('verHistorico') }}" role = "button" class = "btn btn-outline-danger">Cancelar</a>
 
                                                                                 </div>
 
                                                                                 <div class = "col d-flex justify-content-center">
                                                                                    
-                                                                                        <a href="" role = "button" class = "btn btn-outline-success">Modificar</a>
+                                                                                        <button type = "submit" class = "btn btn-outline-success">Modificar</a>
                                                                                      
                                                                                 </div>  
+
+                                                                </form>
                                                                                 
                                                                 </div>
 
@@ -507,22 +537,20 @@
                                                                 </div>
 
                                                 
-                                                
                                         
                                                 </scroll-page>
+
+                                               
                                    
                                         </scroll-container>
-
-
                         </div>
+                </div>
+
         </div>
 
-        
 
 
-
-
-    </div>
+       
           
     @endsection
 

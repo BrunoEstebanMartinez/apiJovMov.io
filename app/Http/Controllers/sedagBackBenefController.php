@@ -82,13 +82,14 @@ class sedagBackBenefController extends Controller
                 'nombres.obligatoriedad' => 'required|string|max:255',
                 'fecha_nacimiento.obligatoriedad' => 'required',
                 'sexo.obligatoriedad' => 'required',
-                'curp.obligatoriedad.tamaño' => 'required|min:18'
+                'curp.obligatoriedad.tamaño' => 'required|min:18',
+                'numeroTel.obligatoriedad.tamaño' => 'required|min:9',
+                
         ]);
 
-        $onStateCveMunicipio = DB::table('IM_LOCALIDADES')->WHERE('MUNICIPIO', $newBenef->municipio_desc)
-        ->DISTINCT()
-        ->VALUE('CVE_MUNICIPIO');
+     
 
+    
         $onStateCveLocalidad = DB::table('IM_LOCALIDADES')->WHERE('LOC', $newBenef -> loc_desc)
         ->DISTINCT()
         ->VALUE('CVE_LOC');
@@ -182,11 +183,14 @@ class sedagBackBenefController extends Controller
         $cve_arbol = session()->get('cve_arbol'); 
         $status_1 = session()->get('status_1');
 
-
     
         $allDataBenef = sedagBenefModel::SELECT('*')
                         ->WHERE('FOLIO', $getFolio)
                         ->first();
+
+                        $getCvesEntidad = catAllCveAndDescModel::SELECT('CVE_ENTIDAD_FEDERATIVA', 'ENTIDAD_FEDERATIVA')
+                        ->DISTINCT()
+                        ->GET();
         
                         $getCvesInfo = catAllCveAndDescModel::SELECT('CVE_MUNICIPIO', 'MUNICIPIO')
                         ->WHERE('CVE_ENTIDAD_FEDERATIVA', '15')
@@ -199,7 +203,7 @@ class sedagBackBenefController extends Controller
                         ->GET();
  
 
-        return view('SFR.Beneficiarios.editarBeneficiario', compact('logon', 'password', 'cve_usuario', 'cve_arbol', 'status_1', 'allDataBenef', 'getCvesInfo', 'getCvesLoc'));
+        return view('SFR.Beneficiarios.editarBeneficiario', compact('logon', 'password', 'cve_usuario', 'cve_arbol', 'status_1', 'allDataBenef', 'getCvesInfo', 'getCvesLoc', 'onGetEntidadFeder', 'getCvesEntidad'));
 
     }
 
@@ -211,7 +215,7 @@ class sedagBackBenefController extends Controller
 
 
 
-    public function onUpdateBenef(Request $beneficiario, $folio){
+    public function onUpdateBenef(Request $request, $folio){
 
         $logon = session()->get('correoUser');
         $password = session()->get('passUser'); 
@@ -223,15 +227,15 @@ class sedagBackBenefController extends Controller
         ->DISTINCT()
         ->VALUE('CVE_MUNICIPIO');
 
-        $onStateCveLocalidad = DB::table('IM_LOCALIDADES')->WHERE('LOC', $request -> loc_desc)
+        $onStateCveLocalidad = DB::table('IM_LOCALIDADES')->WHERE('NOM_LOC', $request -> loc_desc)
         ->DISTINCT()
         ->VALUE('CVE_LOC');
 
-        $onStateLatLocalidad = DB::table('IM_LOCALIDADES')->WHERE('CVE_LOC', $onStateCveLocalidad)
+        $onStateLatLocalidad = DB::table('IM_LOCALIDADES')->WHERE('NOM_LOC', $request -> loc_desc)
         ->DISTINCT()
         ->VALUE('LATITUD');
 
-        $onStateLongLocalidad = DB::table('IM_LOCALIDADES')->WHERE('CVE_LOC', $onStateCveLocalidad)
+        $onStateLongLocalidad = DB::table('IM_LOCALIDADES')->WHERE('NOM_LOC', $request -> loc_desc)
         ->DISTINCT()
         ->VALUE('LONGITUD');
 
@@ -253,33 +257,22 @@ class sedagBackBenefController extends Controller
             }
         }
 
-                $file1 = $inFetch['0']." ".$request->curp." ".$request->file('cop_fot_iden_ad')->getClientOriginalName();
-                $file2 = $inFetch['1']." ".$request->curp." ".$request->file('cop_fot_iden_rev')->getClientOriginalName();
-                $file3 = $inFetch['2']." ".$request->curp." ".$request->file('cop_fot_comp')->getClientOriginalName();
-                $file4 = $inFetch['3']." ".$request->curp." ".$request->file('cop_fot_curp')->getClientOriginalName();
-                $file5 = $inFetch['4']." ".$request->curp." ".$request->file('cop_fot_fur')->getClientOriginalName();
-
-                $request->file('cop_fot_iden_ad')->move(public_path().'/storage/',$file1);
-                $request->file('cop_fot_iden_rev')->move(public_path().'/storage/',$file2);
-                $request->file('cop_fot_comp')->move(public_path().'/storage/',$file3);
-                $request->file('cop_fot_curp')->move(public_path().'/storage/',$file4);
-                $request->file('cop_fot_fur')->move(public_path().'/storage/',$file5);
-
         $onUpdate = sedagBenefModel::WHERE('FOLIO', $folio)
             ->update([
 
                 'PRIMER_APELLIDO' => $request -> primer_apellido,
                 'SEGUNDO_APELLIDO' => $request -> segundo_apellido,
                 'NOMBRES' => $request -> nombres,
-                'NOMBRE_COMPLETO' => $request -> $request->primer_apellido." ".$request->segundo_apellido." ".$request->nombres,
-                'FECHA_NACIMIENTO' => $request -> date('d/m/Y', strtotime($request->fecha_nacimiento)),
+                'NOMBRE_COMPLETO' => $request->primer_apellido." ".$request->segundo_apellido." ".$request->nombres,
+                'FECHA_NACIMIENTO' => date('d/m/Y', strtotime($request->fecha_nacimiento)),
                 'SEXO' => $request -> genero,
-                'CVE_MUNICIPIO' => $request -> $onStateCveMunicipio,
-                'DESC_MUNICIPIO' => $request -> $request->municipio_desc,
-                'CVE_LOCALIDAD' => $request -> $onStateCveLocalidad,
-                'DESC_LOCALIDAD' => $request -> $request->loc_desc, 
+                'DESC_ENTIDAD_FEDERATIVA' => $request -> entidad_nacimiento,
+                'CVE_MUNICIPIO' => $onStateCveMunicipio,
+                'DESC_MUNICIPIO' => $request -> municipio_desc,
+                'CVE_LOCALIDAD' => $onStateCveLocalidad,
+                'DESC_LOCALIDAD' => $request->loc_desc, 
                 'LOC_LATDEC' => $onStateLatLocalidad,
-                'LOC_LONGDEC' => $request -> $onStateLongLocalidad,
+                'LOC_LONGDEC' => $onStateLongLocalidad,
                 'CALLE' => $request -> calle,
                 'NUM_EXT' => $request -> no_exterior,
                 'NUM_INT' => $request -> no_interior,
@@ -289,15 +282,11 @@ class sedagBackBenefController extends Controller
                 'ENTRE_CALLE' => $request -> entre_calle,
                 'OTRA_REFERENCIA' => $request -> otr_referencia,
                 'TELEFONO' => $request -> numeroTel,
-                'COP_FOT_IDEN_AD' => $file1,
-                'COP_FOT_IDEN_REV' => $file2,
-                'COP_FOT_COMPROBANTE' => $file1,
-                'COP_FOT_CURP' => $file3,
-                'COP_FOT_FUR' => $file4,
+                'CORREO_ELECTRONICO' => $request -> correo_electron
             ]);
         
-        if($onUpdate != true){
-            return route()->redirect('verHistorico');
+        if($onUpdate){
+            return redirect()->route('verHistorico');
         }else{
             return redirect()->back()->withInput()->withErrors(['isSomething' => 'Algo salió mal. Intente de nuevo']);
         }

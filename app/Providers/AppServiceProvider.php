@@ -30,5 +30,6 @@ class AppServiceProvider extends ServiceProvider
         View::share('cve_arbol');
         View::share('status_1');
         View::share('catAllCveAndDescModel');
+
     }
 }
