@@ -534,7 +534,7 @@
                                                                         
                                                                         
                                                                 
-                                                                </div>
+                                                        </div>
 
                                                 
                                         
@@ -544,6 +544,134 @@
                                    
                                         </scroll-container>
                         </div>
+                </div>
+
+                <div style = "position: relative;
+                                height: 100%;
+                                width: 50%;
+                                background-color: black;">
+                                
+                <div style = "position: relative;
+                                height: 10%;
+                                width: 100%;
+                                
+                                display: inline-flex;">
+                <div style = "position: relative;
+                                        width:20%;
+                                        height:100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        padding: 0.5em;"><a role="button" href = "#identificacionAd" class="btn btn-primary">Identificación (Ad)</a></div>
+                        <div style = "position: relative;
+                                        width:20%;
+                                        height:100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        padding: 0.5em;"><a role="button" href = "#IdentificacionRev" class="btn btn-primary">Identificación (Rev)</a></div>
+                        <div style = "position: relative;
+                                        width:20%;
+                                        height:100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        padding: 0.5em;"><a role="button" href = "#Comprobanten" class="btn btn-primary">Comprobante</a></div>
+                        <div style = "position: relative;
+                                        width:20%;
+                                        height:100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        padding: 0.5em;"><a role="button" href = "#Curp" class="btn btn-primary">CURP</a></div>
+                        <div style = "position: relative;
+                                        width:20%;
+                                        height:100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        padding: 0.5em;
+                                        background-color: white;"><a role="button" href = "#FUR" class="btn btn-primary">FUR</a></div>        
+                </div>
+
+               
+
+              
+                        
+                <div style = "position: relative;
+                                height: 90%;
+                                width: 100%;
+                                scroll-behavior: smooth;
+                                overflow: hidden;
+                                "> 
+
+                <scroll-container>
+
+                        <scroll-page id = "#identificacionAd">
+
+                        <div style = "position: relative;
+                                height: 100%;
+                                width: 100%;
+                               ">
+                        
+
+
+                        <img src = "{{ asset('storage/'.$allDataBenef->cop_fot_inden_ad) }}">
+
+                        </div>
+                        
+                        </scroll-page>
+                        <scroll-page id = "#IdentificacionRev">
+                        
+                        <div style = "position: relative;
+                                height: 100%;
+                                width: 100%;
+                                
+                        ">
+                        
+                                 <img src = "{{ asset('storage/'.$allDataBenef->cop_fot_inden_rev) }}">
+                        </div>
+
+                        </scroll-page>
+
+                        <scroll-page id = "#Comprobanten">
+
+                        <div style = "position: relative;
+                                height: 100%;
+                                width: 100%;
+                                
+                        ">
+                        
+                        <img src = "{{ asset('storage/'. $allDataBenef->cop_fot_comprobante) }}">
+                        
+                        </div>
+                        
+                        </scroll-page>
+                        <scroll-page id = "#Curp">
+
+                        <div style = "position: relative;
+                                height: 100%;
+                                width: 100%;
+                                
+                        ">
+                        
+                        <img src = "{{ asset('storage/'.$allDataBenef->cop_fot_curp) }}">
+                        
+                        </div>
+                        
+                        </scroll-page>
+                        <scroll-page id = "#FUR">
+
+                        <div style = "position: relative;
+                                height: 100%;
+                                width: 100%;
+                                
+                        ">
+                        
+                        <img src = "{{ asset('storage/'.$allDataBenef->cop_fot_fur) }}">
+
+                        </div> 
+                        
+                        </scroll-page>
+                </scroll-container>
+
+                        </div>        
+                        
                 </div>
 
         </div>

@@ -61,7 +61,8 @@ class sedagBenefModel extends Model
 		'NUMERO_HIJOS',
 		'CORREO_ELECTRONICO',
 		'IP_USER_C',
-		'STATUS_1'
+		'STATUS_1',
+		'C_USER'
     ];
 
     public $timestamps = false;
