@@ -16,7 +16,9 @@ Route::group(['prefix' => 'sfr-campo'], function() {
     Route::post('registroUnico', 'sedagBackBenefController@publicBenef')->name('registro');
     
     Route::get('editUniquePerson/{idBenef}', 'sedagBackBenefController@onEditBenef')->name('editUnique'); 
-    Route::put('updateBenef/{idBenef}/editado', 'sedagBackBenefController@onUpdateBenef')->name('updateUnique');
+    Route::post('updateBenef/{idBenef}/editado', 'sedagBackBenefController@onUpdateBenef')->name('updateUnique');
+
+    Route::get('busqueda', 'sedagBackBenefController@searchBenefr');
 
 
     //getLocalidades

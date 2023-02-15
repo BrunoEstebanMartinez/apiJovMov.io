@@ -61,9 +61,28 @@ class sedagBenefModel extends Model
 		'NUMERO_HIJOS',
 		'CORREO_ELECTRONICO',
 		'IP_USER_C',
-		'STATUS_1'
+		'STATUS_1',
+		'C_USER'
     ];
 
     public $timestamps = false;
      public $incrementing = false;
+
+	 public function scopeIddPer($query, $periodo)
+	 {
+		 $periodo = strtoupper(Trim($periodo));
+			  
+		 if($periodo)
+			 return $query->where('N_PERIODO', '=', "$periodo");             
+	 }     
+ 
+	 public function scopeIdTodo($query, $todo){
+		 $todo = strtoupper(Trim($todo));          
+		 if($todo)
+			 return $query->where('NOMBRE_COMPLETO', 'LIKE', "%$todo%")
+						 ->orwhere('CURP', 'LIKE', "%$todo%");   
+	 }
+
+
+
 }

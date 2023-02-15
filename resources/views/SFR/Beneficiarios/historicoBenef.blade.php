@@ -10,7 +10,7 @@
         <div class = "row ">
             <div class = "col">
                     <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Por nombre y/o curp..." aria-label="Por nombre y/o curp..." aria-describedby="button-addon2">
+                    <input type="text" class="form-control" placeholder="Por nombre y/o curp..." aria-label="Por nombre y/o curp..." name = "todo" id = "isSearch" aria-describedby="button-addon2">
                     <button class="btn btn-outline-secondary" type="button" disabled><i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
             </div>
@@ -31,46 +31,53 @@
                     ">
 
 
-                    <div class="row row-cols-1 row-cols-md-3 g-4" style = "display: flex;
-                    justify-content: center;">
-                            @foreach($allDataBenef as $beneficiario)
-                                    <div class="col">
-                                    @if(!$beneficiario -> status_1 == '0')
-                                    <div class="card border-success border-2" style="width: 18rem;">
-                                        @else
-                                    <div class="card border-danger border-3" style="width: 18rem;">
-                                        @endif
-                                            <div class="card-body">
-                                                <h5 class="card-title" style = "font-weight: bold">Beneficiario</h5>
-                                                <h6 class="card-title">{{ $beneficiario -> nombre_completo }}</h6>
-                                                <h6 class="card-title">{{ $beneficiario -> curp }}</h6>
-                                                @if(isset($beneficiario -> cop_fot_curp))
-                                                <h6 class="card-title">Documentos: SI</h6>
-                                                @else
-                                                <h6 class="card-title">Documentos: NO</h6>
-                                                @endif
-                                            <div class = "row">
-                                                
-                                                <div class = "col d-flex justify-content-center">
-                                                <button type = "button" class="btn btn-success rounded-pill"><a href="{{ route('editUnique', array($beneficiario->folio)) }}"><i class="fa-solid fa-pencil"></i></a></button>
-                                                </div>
-                                            
-                                                <div class = "col d-flex justify-content-center">
-                                                @if(!$cve_usuario == 'CA')
-                                                    <button type = "button" class="btn btn-danger rounded-pill"><a href="{{ route('editUnique', array($beneficiario->folio)) }}" ></a><i class="fa-solid fa-pencil"></i></button>
-                                                    @else
-                                                    <button type = "button" class="btn btn-danger rounded-pill" disabled><a href="{{ route('editUnique', array($beneficiario->folio))}}" ></a><i class="fa-solid fa-trash"></i></button>
+                   
 
-                                                    @endif
-                                                </div>
+                        <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                    <th scope="col">Periodo</th>
+                                    <th scope="col">Folio</th>
+                                    <th scope="col">Programa</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Entidad federativa</th>
+                                    <th scope="col">Municipio</th>
+                                    <th scope="col">Localidad</th>
+                                    <th scope="col">Aprobado</th>
+                                    <th scope="col"></th>
+                                
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($allDataBenef as $benefUnico)
+                                    <tr>
+                                    <th scope="row">{{Trim($benefUnico ->n_periodo)}}</th>
+                                    <td>{{ $benefUnico -> folio }}</td>
+                                    <td>{{ $benefUnico -> cve_programa }}</td>
+                                    <td>{{ $benefUnico -> nombre_completo }}</td>
+                                    <td>{{ $benefUnico -> desc_entidad_federativa }}</td>
+                                    <td>{{ $benefUnico -> desc_municipio }}</td>
+                                    <td>{{ $benefUnico -> desc_localidad }}</td>
+                                    <td>{{ $benefUnico -> status_1 }}</td>
+                                    <td>
+                                        <div class = "row">
+                                            <div class = "col">
+                                                <button type = "button" class="btn btn-success rounded-pill"><a href="{{ route('editUnique', array($benefUnico->folio)) }}"><i class="fa-solid fa-pencil"></i></a></button>
                                             </div>
-                                                
+                                            <div class = "col">
+                                                @if(!$cve_usuario == 'CA')
+                                                    <button type = "button" class="btn btn-danger rounded-pill"><a href="{{ route('editUnique', array($benefUnico->folio)) }}" ></a><i class="fa-solid fa-pencil"></i></button>
+                                                    @else
+                                                    <button type = "button" class="btn btn-danger rounded-pill" disabled><a href="{{ route('editUnique', array($benefUnico->folio))}}" ></a><i class="fa-solid fa-trash"></i></button>
+                                                @endif
                                             </div>
-                                            </div>
-                                    </div>
-                            @endforeach
-                            
-                        </div>
+                                        </div>
+                                    </td>
+                                    </tr>
+
+                                    @endforeach
+                                </tbody>
+                        </table>
                        
             
     </div>
@@ -84,6 +91,8 @@
     @endsection
 
     @section('javascript')
+
+    <script src = "{{ asset('js/searchBenef.js') }}"></script>
 
 
     @endsection

@@ -2,13 +2,23 @@
 
     @section('canvas')
 
+    @if(count($errors) > 0)
+                      <div class="alert alert-danger" role="alert">
+                        <ul>
+                          @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                          @endforeach
+                        </ul>
+                      </div>
+   @endif
+
+
     <div style = "position: relative;
                 width: 100%;
                 height: 100%;
-               
                 display: inline-flex;">
 
-        <div class = "" style = "position:relative;
+        <div style = "position:relative;
                         width: 50%;
                         height: 100%;
                         display: inline-flex;">
@@ -43,7 +53,6 @@
                                         width: 100%;
                                         height: 33.33%;
                                       
-                                    
                                         ">
 
                                 <div  style = "position: relative; 
@@ -102,9 +111,11 @@
 
                                         <scroll-container>
                                
-
+                                       
                                
                                                 <scroll-page  id = "personalData">
+
+                               
                                                         <div class = "border border-start-0 border-info" style = "position: relative;
                                                                         width: 100%;
                                                                         height: 10%;
@@ -115,24 +126,24 @@
                                                                         height: 90%;
                                                                         padding: 1em;">
 
-                                                                        
+                                                        <form action = "{{ route('updateUnique', $allDataBenef -> folio) }}" method = "POST">
+                                                        {{ csrf_field() }} 
+                                                                        <div class = "row mb-3" >
 
-                                                                        <div class = "row mb-3">
-
-                                                                                <div class = "col" >
-                                                                                      <div class = "input-group">
+                                                                                <div class = "col" style = "display: none;">
+                                                                                      <div class = "input-group"  style = "display: none;">
                                                                                                 <label class="form-label">Folio</label>
                                                                                                 <input type="text" class = "form-control" value = "{{$allDataBenef->folio}}" name = "folio" id = "folio">
                                                                                                      
                                                                                       </div>  
-                                                                                </div>
+                                                                         </div>
 
                                                                                 <div class = "col">
-                                                                                      <div class = "input-group">
+                                                                                      
                                                                                                 <label class="form-label">Apellido paterno</label>
                                                                                                 <input type="text" class = "form-control" value = "{{$allDataBenef->primer_apellido}}" name = "primer_apellido" id = "primer_apellido">
                                                                                                      
-                                                                                      </div>  
+                                                                                       
                                                                                 </div>  
                                                                                 <div class = "col">
                                                                                                 <label class="form-label">Apellido materno</label>
@@ -167,7 +178,7 @@
                                                                                         <div class = "col">
                                                                                                
                                                                                                 <label class="form-label">Fecha de nacimiento</label>
-                                                                                                <input type="date" class = "form-control" value = "{{ date('Y-m-d', strtotime($allDataBenef->fecha_nacimiento)) }}" name = "fecha_nacimiento" id = "fecha_nacimiento">
+                                                                                                <input type="date" class = "form-control" value = "date('d/m/Y', {{ $allDataBenef->fecha_nacimiento }})" name = "fecha_nacimiento" id = "fecha_nacimiento">
                                                                                                 
                                                                                         </div> 
 
@@ -248,7 +259,7 @@
                                                                                         <div class = "col">
 
                                                                                                                 <label class="form-label">Correo electrónico</label>
-                                                                                                                <input type="text"  class = "form-control" value = "{{ $allDataBenef -> correo_electronico }}"name = "correo_electron" id = "correo_electron">
+                                                                                                                <input type="email"  class = "form-control" value = "{{ $allDataBenef -> correo_electronico }}" name = "correo_electron" id = "correo_electron">
 
                                                                                         </div>    
                                                                                         
@@ -276,12 +287,28 @@
                                                                                 <div class = "col">
                                                                                       <div class = "input-group">
                                                                                                 
-                                                                                                <span class="input-group-text">Entidad federativa</span>
-                                                                                                @if($allDataBenef -> cve_entidad_federativa == '15')
-                                                                                                <input type="text" class="form-control" id = "initQuery" value = "{{ $allDataBenef->cve_entidad_federativa }}" name = "entidad_federativa" disabled>
-                                                                                                <input type="text" class = "form-control" value = "Estado de México">
-                                                                                                @endif
-                                                                                                     
+                                                                                                <span class="input-group-text">Entidad de nacimiento</span>
+                                                                                                <input class="form-control" value =  "{{ $allDataBenef -> desc_entidad_federativa}}" name = "entidad_nacimiento" id = "entidad_nacimiento" list = "entidad_nacimiento_list"> 
+                                                                                                <datalist id = "entidad_nacimiento_list">
+                                                                                               
+                                                                                                                @if(is_array($getCvesEntidad) || is_object($getCvesEntidad))
+                                                                                                                @foreach($getCvesEntidad as $entidades)
+                                                                                                                        <option value = "{{ $entidades -> entidad_federativa }}"></option>
+                                                                                                                @endforeach
+                                                                                                                @endif
+                                                                                                </datalist>
+
+
+                                                                                                </datalist>
+                                                                                                <span class="input-group-text">Entidad donde vive</span>
+                                                                                                <input class="form-control" name = "entidad_vive" id = "entidad_vive" list = "entidad_vive_list">
+                                                                                                <datalist id = "entidad_vive_list">
+                                                                                                        @if(is_array($getCvesEntidad) || is_object($getCvesEntidad))
+                                                                                                                @foreach($getCvesEntidad as $entidades)
+                                                                                                                        <option value = "{{ $entidades -> entidad_federativa }}"></option>
+                                                                                                                @endforeach
+                                                                                                        @endif 
+                                                                                                </datalist>
                                                                                       </div>  
                                                                                 </div>  
                                                                                 
@@ -348,9 +375,9 @@
                                                                                         <div class = "col">
                                                                                                 
                                                                                         <div class="input-group">
-                                                                                                <span class="input-group-text">Calle</span>
+                                                                                                <span class="input-group-text">Entre calle</span>
                                                                                                 <input type="text"  class="form-control" value = "{{$allDataBenef->calle}}" name = "calle" id = "calle">
-                                                                                                <span class="input-group-text">Y</span>
+                                                                                                <span class="input-group-text">Y calle</span>
                                                                                                 <input type="text"  class="form-control" value = "{{ $allDataBenef->entre_calle }}" name = "entre_calle" id = "entre_calle">
                                                                                         </div>                    
                                                                                                  
@@ -364,7 +391,7 @@
                                                                                 <div class = "col">
                                                                                                 
                                                                                         <div class="input-group">
-                                                                                                <span class="input-group-text">Manzana</span>
+                                                                                                <span class="input-group-text">Mza</span>
                                                                                                 <input type="text"  class="form-control" value = "{{ $allDataBenef->manzana }}" name = "manzana" id = "manzana">
                                                                                                 <span class="input-group-text">Lote</span>
                                                                                                 <input type="text" class="form-control" value = "{{ $allDataBenef->lote }}" name = "lote" id = "lote">
@@ -379,9 +406,9 @@
                                                                                 <div class = "col">
                                                                                                 
                                                                                         <div class="input-group">
-                                                                                                <span class="input-group-text">Número exterior</span>
+                                                                                                <span class="input-group-text">No. ext</span>
                                                                                                 <input type="text" class="form-control" value = "{{ $allDataBenef->num_ext }}" name = "no_exterior" id = "no_exterior">
-                                                                                                <span class="input-group-text">Número interior</span>
+                                                                                                <span class="input-group-text">No. int</span>
                                                                                                 <input type="text" class="form-control" value = "{{ $allDataBenef->num_int }}" name = "no_interior" id = "no_interior">
                                                                                         </div>                    
                                                                                                  
@@ -426,7 +453,7 @@
 
                                                                                 <div class = "col">
                                                                                 <label class="mb-3" >Identificación oficial (Adverso)</label>
-                                                                                        <input type="file" name = "cop_fot_iden_ad" class="form-control" value = "{{ $allDataBenef->cop_fot_inden_ad }}">
+                                                                                        <input type="file" name = "cop_fot_iden_ad" class="form-control">
                                                                                         </div>
                                                                                   
                                                                                 
@@ -434,13 +461,20 @@
 
                                                                 </div>
 
+
+
+
                                                                 <div class = "row mb-3">
 
                                                                                 <div class = "col">
                                                                                 <label class="mb-3">Identificación oficial (Reverso)</label>
-                                                                                        <input type="file" name = "cop_fot_iden_rev" class="form-control" value = "{{ $allDataBenef->cop_fot_inden_rev }}">
+                                                                                       
+                                                                                        <input type="file" name = "cop_fot_iden_rev" class="form-control">
                                                                                         
-                                                                                        </div>
+                                                                                
+                                                                                        
+                                                                                        
+                                                                </div>
                                                                                   
                                                                                 
                                                                                 
@@ -452,7 +486,7 @@
                                                                                 <div class = "col">
                                                                                 <label class="mb-3">Comprobante domiciliario</label>
        
-                                                                                        <input type="file" name = "cop_fot_comp" class="form-control" value = "{{ $allDataBenef->cop_fot_comprobante }}">
+                                                                                        <input type="file" name = "cop_fot_comp" class="form-control">
                                                                                  </div>
                                                                                   
                                                                                 
@@ -465,7 +499,7 @@
                                                                                 <div class = "col">
                                                                                <label class="mb-3">CURP</label>
                            
-                                                                                        <input type="file" name = "cop_fot_curp" class="form-control" value = "{{ $allDataBenef->cop_fot_curp }}">
+                                                                                        <input type="file" name = "cop_fot_curp" class="form-control">
                                                                                                                                                      </div>
                                                                                   
                                                                                 
@@ -477,7 +511,7 @@
 
                                                                                 <div class = "col">
                                                                                         <label class="mb-3">FUR</label>
-                                                                                        <input type="file" name = "cop_fot_fur" class="form-control" value = "{{ $allDataBenef->cop_fot_fur }}">
+                                                                                        <input type="file" name = "cop_fot_fur" class="form-control">
                                                                                         
                                                                                 </div>  
                                                                                 
@@ -489,40 +523,176 @@
                                                                                 
                                                                                 <div class = "col d-flex justify-content-center">
 
-                                                                                        <a href="" role = "button" class = "btn btn-outline-danger">Cancelar</a>
+                                                                                        <a href="{{ route('verHistorico') }}" role = "button" class = "btn btn-outline-danger">Cancelar</a>
 
                                                                                 </div>
 
                                                                                 <div class = "col d-flex justify-content-center">
                                                                                    
-                                                                                        <a href="" role = "button" class = "btn btn-outline-success">Modificar</a>
+                                                                                        <button type = "submit" class = "btn btn-outline-success">Modificar</a>
                                                                                      
                                                                                 </div>  
+
+                                                                </form>
                                                                                 
                                                                 </div>
 
                                                                         
                                                                         
                                                                 
-                                                                </div>
+                                                        </div>
 
-                                                
                                                 
                                         
                                                 </scroll-page>
+
+                                               
                                    
                                         </scroll-container>
-
-
                         </div>
-        </div>
+                </div>
 
         
+              <div style = "position: relative;
+                                height: 100%;
+                                width: 50%;
+                        ">
+                                
+                <div style = "position: relative;
+                                height: 10%;
+                                width: 100%; 
+                                display: inline-flex;
+                                justify-content: center;">
+                <div style = "position: relative;
+                                        width:20%;
+                                        height:100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        "><a role="button" href = "#identificacionAd" class="btn btn-primary">Ident (Ad)</a></div>
+                        <div style = "position: relative;
+                                        width:20%;
+                                        height:100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        "><a role="button" href = "#IdentificacionRev" class="btn btn-primary">Ident (Rev)</a></div>
+                        <div style = "position: relative;
+                                        width:20%;
+                                        height:100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        "><a role="button" href = "#Comprobanten" class="btn btn-primary">Compr. D</a></div>
+                        <div style = "position: relative;
+                                        width:20%;
+                                        height:100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        "><a role="button" href = "#Curp" class="btn btn-primary">CURP</a></div>
+                        <div style = "position: relative;
+                                        width:20%;
+                                        height:100%;
+                                        display: flex;
+                                        justify-content: center;
+                                        "><a role="button" href = "#FUR" class="btn btn-primary">FUR</a></div>        
+                </div>
+
+               
+
+              
+                        
+                <div style = "position: relative;
+                                height: 90%;
+                                width: 100%;
+                                scroll-behavior: smooth;
+                                overflow: hidden;
+                                padding: 1em;"> 
+
+                <scroll-container>
+
+                        <scroll-page id = "identificacionAd">
+
+                        <div style = "position: relative;
+                                height: 100%;
+                                width: 100%;
+                               ">
+                        
+
+
+                        <img src = "{{ url('storage/'.$allDataBenef->cop_fot_iden_ad) }}" id = "image1" width = "100%" height = "100%">
+
+                        </div>
+                        
+                        </scroll-page>
+
+                        <scroll-page id = "IdentificacionRev">
+                        
+                        <div style = "position: relative;
+                                height: 100%;
+                                width: 100%;
+                                
+                        ">
+                        
+                                 <img src = "{{ url('storage/'.$allDataBenef->cop_fot_iden_rev) }}" id = "image2" width = "100%" height = "100%">
+                        </div>
+
+                        </scroll-page>
+
+                        <scroll-page id = "Comprobanten">
+
+                        <div style = "position: relative;
+                                height: 100%;
+                                width: 100%;
+                                
+                        ">
+                        
+                        <img src = "{{ url('storage/'.$allDataBenef->cop_fot_comprobante) }}" id = "image3" width = "100%" height = "100%">
+                        
+                        </div>
+                        
+                        </scroll-page>
+
+                        <scroll-page id = "Curp">
+
+                        <div style = "position: relative;
+                                height: 100%;
+                                width: 100%;
+                                
+                        ">
+                        
+                        <img src = "{{ url('storage/'.$allDataBenef->cop_fot_curp) }}" id ="image4" width = "100%" height = "100%">
+                        
+                        </div>
+                        
+                        </scroll-page>
+
+                        <scroll-page id = "FUR">
+
+                        <div style = "position: relative;
+                                height: 100%;
+                                width: 100%;
+                                
+                        ">
+                        
+                        <img src = "{{ url('storage/'.$allDataBenef->cop_fot_fur) }}" id = "image5" width = "100%" height = "100%">
+
+                        </div> 
+                        
+                        </scroll-page>
+
+                </scroll-container>
+
+                        </div>        
+                        
+                </div>
+
+        </div>
+                        
+                </div>
+
+        </div>
 
 
 
-
-    </div>
+       
           
     @endsection
 
