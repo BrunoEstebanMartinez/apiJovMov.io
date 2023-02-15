@@ -48,6 +48,21 @@ class sedagBenefController extends Controller
        $newBenef = new sedagBenefModel();
 
 
+          if (getenv('HTTP_CLIENT_IP')) {
+                $ip = getenv('HTTP_CLIENT_IP');
+            } elseif (getenv('HTTP_X_FORWARDED_FOR')) {
+                $ip = getenv('HTTP_X_FORWARDED_FOR');
+            } elseif (getenv('HTTP_X_FORWARDED')) {
+                $ip = getenv('HTTP_X_FORWARDED');
+            } elseif (getenv('HTTP_FORWARDED_FOR')) {
+                $ip = getenv('HTTP_FORWARDED_FOR');
+            } elseif (getenv('HTTP_FORWARDED')) {
+                $ip = getenv('HTTP_FORWARDED');
+            } else {
+                $ip = $_SERVER['REMOTE_ADDR'];
+            } 
+
+
            $compro =      $request -> curp.'_'.'ComprobanteEs' . '.' . 'jpg';
            $curpfoto =    $request -> curp.'_'.'Curp' . '.' . 'jpg';
            $indentadver = $request -> curp.'_'.'indenFotoAdver' . '.' . 'jpg';
@@ -84,16 +99,17 @@ class sedagBenefController extends Controller
           $controlCveEts = DB::table('CAT_ESTADO_CIVIL')->where('ESTADO_CIVIL', $request -> cve_estado_civil)->value('CVE_ESTADO_CIVIL');
           $controlCveGrs = DB::table('CAT_GRADO_ESTUDIO')->where('GRADO_ESTUDIOS', $request -> cve_grado_estudios)->value('CVE_GRADO_ESTUDIOS');  
 
-          $cve_depeVal = DB::table('CAT_PROGRAMAS_APP')->where('DEPENDENCIA', $request -> cve_dependencia)->value('CVE_DEPENDENCIA');
+          $cve_depeVal = DB::table('CAT_PROGRAMAS_APP')->where('DEPENDENCIA', trim($request -> cve_dependencia))->value('CVE_DEPENDENCIA');
       
       $newBenef -> N_PERIODO = date('Y');
 
       if(isset($request -> cve_programa)){
-
-              $cve_progVal = DB::table('CAT_PROGRAMAS_APP')->where('PROGRAMA', $request -> cve_programa)->value('CVE_PROGRAMA');
-          //$cve_progVal = catProgramasModel::select('CVE_PROGRAMA')->WHERE('PROGRAMA', $request -> cve_programa)->GET();
-          $newBenef -> CVE_PROGRAMA = $cve_progVal;
-
+         
+              $cve_progVal = DB::table('CAT_PROGRAMAS_APP')->where('PROGRAMA', trim($request -> cve_programa))->value('CVE_PROGRAMA');
+            //$cve_progVal = catProgramasModel::select('CVE_PROGRAMA')->WHERE('PROGRAMA', $request -> cve_programa)->GET();
+              $newBenef -> CVE_PROGRAMA = $cve_progVal;
+      
+    
       } else{
 
            $newBenef -> OTR_PROGRAMA = $request -> otr_programa;
@@ -130,7 +146,12 @@ class sedagBenefController extends Controller
 
           if(($request -> cve_entidad_federativa) == "MC"){
               $newBenef -> CVE_ENTIDAD_FEDERATIVA = "15"; 
+          }else{
+              $newBenef -> CVE_ENTIDAD_FEDERATIVA = $request -> cve_entidad_federativa;
           }
+
+          $newBenef -> IP_USER_C = $ip;
+          $newBenef -> C_USER = $request -> c_user;
 
        
             $newBenef -> save();
